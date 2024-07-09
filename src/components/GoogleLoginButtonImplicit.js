@@ -3,7 +3,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export const GoogleLoginButtonImplicit = () => {
+export const GoogleLoginButtonImplicit = ({ buttonLabel }) => {
   const navigate = useNavigate();
 
   // Implicit - Start
@@ -48,7 +48,7 @@ export const GoogleLoginButtonImplicit = () => {
           onClick={googleLoginImplicit}
           className="h-[40px] w-fit cursor-pointer flex items-center bg-white border rounded-lg px-2"
         >
-          <div className="h-[18px] w-[18px] mr-[8px]">
+          <div className={`h-[18px] w-[18px] ${buttonLabel ? "mr-[8px]" : ""}`}>
             {/* Google Logo */}
             <svg
               version="1.1"
@@ -80,7 +80,7 @@ export const GoogleLoginButtonImplicit = () => {
 
           {/* Button Text */}
           <span className="text-black text-sm overflow-hidden text-ellipsis font-medium">
-            Sign in with Google
+            {buttonLabel}
           </span>
         </div>
       </div>

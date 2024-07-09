@@ -111,7 +111,7 @@ export const CustomInput = ({
   onChange,
   onBlur,
   prefix,
-  suffix = true,
+  suffix = false,
   error,
   disabled,
   inputClassName = "",

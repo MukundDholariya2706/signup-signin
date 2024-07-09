@@ -4,6 +4,7 @@ import { GoogleLoginButtonImplicit } from "../components/GoogleLoginButtonImplic
 import { FacebookLoginButton } from "../components/FacebookLoginButton";
 import { LinkedinLoginButton } from "../components/LinkedinLoginButton";
 import { CustomInput } from "../components/CustomInput";
+import axios from "axios";
 
 export const Signup = () => {
   const navigate = useNavigate();
@@ -97,6 +98,23 @@ export const Signup = () => {
     }));
   };
 
+  // Validation Check - Start
+  const areFieldsEmpty = (fields) => {
+    for (let key in fields) {
+      const value = fields[key];
+      if (
+        value === null ||
+        value === undefined ||
+        (typeof value === "string" && value.trim() === "")
+      ) {
+        return true; // Found an empty field
+      }
+    }
+    return false; // No empty fields found
+  };
+  // Validation Check - End
+
+  // Handle Submit Funcation - Start
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -109,64 +127,118 @@ export const Signup = () => {
     validateField("password", password);
     validateField("confirm_password", confirm_password);
 
-    console.log(formData, "formData");
+    const isInvalid = areFieldsEmpty(formData);
+
+    // Form is in invalid return;
+    if (isInvalid) return;
+
+    // Form is valid - API call for save data
+    saveUserData(formData);
   };
+
+  const saveUserData = async (payload) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/auth/signup",
+        formData
+      );
+      console.log(response, "response");
+    } catch (error) {
+      console.error("Failed to save userdata:", error);
+    }
+  };
+
+  // Handle Submit Funcation - End
 
   useEffect(() => {
     if (token) navigate("/dashboard");
   });
 
   return (
-    <div className="">
-      <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-2 gap-1">
-          <CustomInput
-            type={"text"}
-            // label={"First Name"}
-            placeholder="Enter your first name here"
-            onChange={handleOnChange}
-            name="first_name"
-            error={errors.first_name}
-          />
-          <CustomInput
-            type={"text"}
-            // label={"last_name"}
-            placeholder="Enter your last name here"
-            onChange={handleOnChange}
-            name="last_name"
-            error={errors.last_name}
-          />
-          <CustomInput
-            type={"email"}
-            // label={"Email"}
-            placeholder="Enter your email here"
-            onChange={handleOnChange}
-            name="email"
-            error={errors.email}
-          />
-          <CustomInput
-            type={"password"}
-            // label={"Password"}
-            placeholder="Enter your password"
-            onChange={handleOnChange}
-            name="password"
-            error={errors.password}
-          />
-          <CustomInput
-            type={"password"}
-            // label={"Confirm password"}
-            placeholder="Enter your confirm password"
-            onChange={handleOnChange}
-            name="confirm_password"
-            error={errors.confirm_password}
-          />
+    <div className="border border-white rounded-lg p-8 bg-white">
+      <div className="flex flex-col">
+        <div className="font-semibold mb-4">Signup</div>
+        <div className="flex gap-1 mb-1 justify-center ">
+          <div>
+            <GoogleLoginButtonImplicit />
+          </div>
+          <div>
+            <FacebookLoginButton />
+          </div>
+          <div>
+            <LinkedinLoginButton />
+          </div>
+        </div>
+        <div className="w-[310px] sm:w-[416px] flex items-center justify-between">
+          <div className="border border-[#9BA1B9] w-full"></div>
+          <div className="bg-white p-2 text-[#9BA1B9]">OR</div>
+          <div className="border border-[#9BA1B9] w-full"></div>
         </div>
         <div>
-          <button className="w-[50%] bg-white border rounded-lg text-sm">
-            Submit
-          </button>
+          <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <div className="">
+                <CustomInput
+                  type={"text"}
+                  // label={"First Name"}
+                  placeholder="Enter your first name here"
+                  onChange={handleOnChange}
+                  name="first_name"
+                  error={errors.first_name}
+                />
+              </div>
+              <div className="">
+                <CustomInput
+                  type={"text"}
+                  // label={"last_name"}
+                  placeholder="Enter your last name here"
+                  onChange={handleOnChange}
+                  name="last_name"
+                  error={errors.last_name}
+                />
+              </div>
+              <div className="">
+                <CustomInput
+                  type={"email"}
+                  // label={"Email"}
+                  placeholder="Enter your email here"
+                  onChange={handleOnChange}
+                  name="email"
+                  error={errors.email}
+                />
+              </div>
+              <div className="">
+                <CustomInput
+                  type={"password"}
+                  // label={"Password"}
+                  placeholder="Enter your password"
+                  onChange={handleOnChange}
+                  name="password"
+                  suffix={true}
+                  error={errors.password}
+                />
+              </div>
+              <div className="">
+                <CustomInput
+                  type={"password"}
+                  // label={"Confirm password"}
+                  placeholder="Enter your confirm password"
+                  onChange={handleOnChange}
+                  name="confirm_password"
+                  suffix={true}
+                  error={errors.confirm_password}
+                />
+              </div>
+            </div>
+
+            <div>
+              <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Sign Up
+              </button>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
   );
 };

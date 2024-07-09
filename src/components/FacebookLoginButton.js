@@ -3,7 +3,7 @@ import FacebookLogin from "react-facebook-login";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export const FacebookLoginButton = () => {
+export const FacebookLoginButton = ({ buttonLabel = "" }) => {
   const navigate = useNavigate();
 
   const responseFacebook = async (response) => {
@@ -35,7 +35,7 @@ export const FacebookLoginButton = () => {
   return (
     <div>
       <FacebookLogin
-        textButton={`Sign up with Facebook`}
+        textButton={buttonLabel}
         appId={process.env.REACT_APP_FACEBOOK_APPID}
         size="small"
         autoLoad={false}
@@ -43,7 +43,7 @@ export const FacebookLoginButton = () => {
         callback={responseFacebook}
         onFailure={failureFacebook}
         cssClass="flex items-center bg-white border rounded-lg px-2 text-black font-semibold text-[14px] h-[40px]"
-        icon="fa-facebook text-blue-700 pr-2"
+        icon={`fa-facebook w-[18px] text-blue-700 ${buttonLabel ? "pr-2" : ""}`}
       />
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { useSearchParams, useNavigate } from "react-router-dom";
 
-export const LinkedinLoginButton = () => {
+export const LinkedinLoginButton = ({ buttonLabel }) => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const code = searchParams.get("code");
@@ -27,7 +27,6 @@ export const LinkedinLoginButton = () => {
           localStorage.setItem("user", JSON.stringify(user));
           navigate("/dashboard");
         }
-
       })
       .catch((error) => {
         console.log("error", error);
@@ -40,7 +39,7 @@ export const LinkedinLoginButton = () => {
         href={`https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${process.env.REACT_APP_LINKDIN_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_LINKDIN_REDIRECT_URL}&scope=openid%20email%20profile`}
         className="h-[40px] w-fit cursor-pointer flex items-center bg-white border rounded-lg px-2"
       >
-        <div className="h-[18px] w-[18px] mr-[8px]">
+        <div className={`h-[18px] w-[18px] ${buttonLabel ? "mr-[8px]" : ""}`}>
           {/* Linkdin Logo */}
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
             <path
@@ -56,7 +55,7 @@ export const LinkedinLoginButton = () => {
 
         {/* Button Text */}
         <span className="text-black text-sm overflow-hidden text-ellipsis font-medium">
-          Sign in with LinkedIn
+          {buttonLabel}
         </span>
       </a>
     </>
