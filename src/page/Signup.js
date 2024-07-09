@@ -9,7 +9,7 @@ export const Signup = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const svgIcon = `          <svg
-            className="w-4 h-4 text-gray-500 dark:text-gray-400"
+            class="w-4 h-4 text-gray-500 dark:text-gray-400"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -109,7 +109,7 @@ export const Signup = () => {
     validateField("password", password);
     validateField("confirm_password", confirm_password);
 
-    console.log(formData, 'formData');
+    console.log(formData, "formData");
   };
 
   useEffect(() => {
