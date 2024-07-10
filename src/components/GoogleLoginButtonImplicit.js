@@ -2,6 +2,7 @@ import React from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export const GoogleLoginButtonImplicit = ({ buttonLabel }) => {
   const navigate = useNavigate();
@@ -24,17 +25,16 @@ export const GoogleLoginButtonImplicit = ({ buttonLabel }) => {
         .then((response) => {
           let { data } = response;
           if (data?.status) {
+            toast.success(data?.message);
             const { token, user } = data.data;
             localStorage.setItem("token", token);
             localStorage.setItem("user", JSON.stringify(user));
             navigate("/dashboard");
           }
         })
-        .catch((error) => {
-          console.log(error, "error");
-        });
     } catch (error) {
       console.error("Failed to fetch user details:", error);
+      toast.error(error?.response?.data?.message);
     }
   };
 
