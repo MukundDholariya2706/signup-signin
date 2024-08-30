@@ -6,9 +6,10 @@ import { LinkedinLoginButton } from "../components/LinkedinLoginButton";
 import { CustomInput } from "../components/CustomInput";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { GithubLoginButton } from "../components/GithubLoginButton";
 
 export const Signup = () => {
-  const svgIcon = `          <svg
+  const svgIcon = `<svg
   class="w-4 h-4 text-gray-500 dark:text-gray-400"
   aria-hidden="true"
   xmlns="http://www.w3.org/2000/svg"
@@ -182,6 +183,7 @@ C203.652,105.088,184.91,100,165,100c-19.909,0-38.651,5.088-54.999,14.028V85z"/>
       <div className="">
         <div className="font-semibold mb-4">Signup</div>
         <div className="flex flex-col lg:flex-row items-center gap-1">
+          <GithubLoginButton />
           <GoogleLoginButtonImplicit buttonLabel={"Continue with Google"} />
           <FacebookLoginButton buttonLabel={"Continue with Facebook"} />
           <LinkedinLoginButton buttonLabel={"Continue with LinkedIn"} />
