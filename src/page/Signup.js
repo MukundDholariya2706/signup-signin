@@ -183,7 +183,7 @@ C203.652,105.088,184.91,100,165,100c-19.909,0-38.651,5.088-54.999,14.028V85z"/>
       <div className="">
         <div className="font-semibold mb-4">Signup</div>
         <div className="flex flex-col lg:flex-row items-center gap-1">
-          <GithubLoginButton />
+          <GithubLoginButton buttonLabel={'Continue with Github'} />
           <GoogleLoginButtonImplicit buttonLabel={"Continue with Google"} />
           <FacebookLoginButton buttonLabel={"Continue with Facebook"} />
           <LinkedinLoginButton buttonLabel={"Continue with LinkedIn"} />
